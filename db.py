@@ -106,3 +106,16 @@ def update_balance(player_id, amount):
 
     conn.commit()
     conn.close()
+
+def update_score(player_id, points):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE players
+        SET score = score + ?
+        WHERE player_id = ?
+    """, (points, player_id))
+
+    conn.commit()
+    conn.close()
