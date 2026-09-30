@@ -58,3 +58,49 @@ def init_db():
 
     conn.commit()
     conn.close()
+    def create_player(name):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        INSERT INTO players (name, balance, score)
+        VALUES (?, 100, 0)
+    """, (name,))
+
+    player_id = cursor.lastrowid
+
+    conn.commit()
+    conn.close()
+
+    return player_id
+
+
+def get_player(player_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT player_id, name, balance, score
+        FROM players
+        WHERE player_id = ?
+    """, (player_id,))
+
+    player = cursor.fetchone()
+
+    conn.close()
+
+    return player
+
+
+def update_balance(player_id, amount):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE players
+        SET balance = balance + ?
+        WHERE player_id = ?
+    """, (amount, player_id))
+
+    conn.commit()
+    conn.close()
