@@ -119,3 +119,30 @@ def update_score(player_id, points):
 
     conn.commit()
     conn.close()
+    def add_drink(drink_name, price):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        INSERT OR IGNORE INTO drinks (drink_name, price)
+        VALUES (?, ?)
+    """, (drink_name, price))
+
+    conn.commit()
+    conn.close()
+
+
+def get_drinks():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT drink_id, drink_name, price
+        FROM drinks
+    """)
+
+    drinks = cursor.fetchall()
+
+    conn.close()
+
+    return drinks
