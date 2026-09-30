@@ -58,7 +58,9 @@ def init_db():
 
     conn.commit()
     conn.close()
-    def create_player(name):
+
+
+def create_player(name):
     conn = get_connection()
     cursor = conn.cursor()
 
